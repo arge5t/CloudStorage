@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34309.116
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{55671AC7-B088-4385-AE55-98A653324458}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{9639D600-F2CF-475B-B0FF-0BA8350EA305}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{5CD7E34B-8136-4314-B19B-3162C183B3EA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{1D1FE3D5-9397-4266-A3FC-BB3C28FD8CFC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudStorage.Domain", "CloudStorage.Domain\CloudStorage.Domain.csproj", "{B48ED5DF-DD1F-4F62-BA13-31F649EF8198}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudStorage.Services", "CloudStorage.Service\CloudStorage.Services.csproj", "{3276E011-3006-4A99-8681-D1D59B62C692}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudStorage.Persistence", "CloudStorage.Persistence\CloudStorage.Persistence.csproj", "{10665C7F-1CDC-4F5E-B7E7-3FBC7B7A7D89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudStorage.WebApi", "CloudStorage.WebApi\CloudStorage.WebApi.csproj", "{879FB977-F668-42CA-A07A-B6C46A7F836A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B48ED5DF-DD1F-4F62-BA13-31F649EF8198}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B48ED5DF-DD1F-4F62-BA13-31F649EF8198}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B48ED5DF-DD1F-4F62-BA13-31F649EF8198}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B48ED5DF-DD1F-4F62-BA13-31F649EF8198}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3276E011-3006-4A99-8681-D1D59B62C692}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3276E011-3006-4A99-8681-D1D59B62C692}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3276E011-3006-4A99-8681-D1D59B62C692}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3276E011-3006-4A99-8681-D1D59B62C692}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10665C7F-1CDC-4F5E-B7E7-3FBC7B7A7D89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10665C7F-1CDC-4F5E-B7E7-3FBC7B7A7D89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10665C7F-1CDC-4F5E-B7E7-3FBC7B7A7D89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10665C7F-1CDC-4F5E-B7E7-3FBC7B7A7D89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{879FB977-F668-42CA-A07A-B6C46A7F836A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{879FB977-F668-42CA-A07A-B6C46A7F836A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{879FB977-F668-42CA-A07A-B6C46A7F836A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{879FB977-F668-42CA-A07A-B6C46A7F836A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B48ED5DF-DD1F-4F62-BA13-31F649EF8198} = {55671AC7-B088-4385-AE55-98A653324458}
+		{3276E011-3006-4A99-8681-D1D59B62C692} = {55671AC7-B088-4385-AE55-98A653324458}
+		{10665C7F-1CDC-4F5E-B7E7-3FBC7B7A7D89} = {9639D600-F2CF-475B-B0FF-0BA8350EA305}
+		{879FB977-F668-42CA-A07A-B6C46A7F836A} = {5CD7E34B-8136-4314-B19B-3162C183B3EA}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FF54629E-011A-4C8C-9F23-6302D4CBC3D6}
+	EndGlobalSection
+EndGlobal
