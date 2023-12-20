@@ -6,4 +6,16 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Core" Version="1.6.0" />
+    <PackageReference Include="Google.Apis.Auth.AspNetCore3" Version="1.64.0" />
+    <PackageReference Include="MailKit" Version="4.3.0" />
+    <PackageReference Include="MimeKit" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CloudStorage.Domain\CloudStorage.Domain.csproj" />
+    <ProjectReference Include="..\CloudStorage.Persistence\CloudStorage.Persistence.csproj" />
+  </ItemGroup>
+
 </Project>

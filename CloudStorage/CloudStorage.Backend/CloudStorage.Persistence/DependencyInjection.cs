@@ -1,4 +1,5 @@
 ﻿using CloudStorage.Persistence.Interfaces;
+using CloudStorage.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +17,9 @@ namespace CloudStorage.Persistence
                 options.UseSqlServer(connectionString);
             });
             services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
+
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ITokenRepository, TokenRepository>();
 
             return services;
         }

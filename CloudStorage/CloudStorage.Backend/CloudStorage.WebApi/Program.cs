@@ -1,4 +1,5 @@
 using CloudStorage.Persistence;
+using CloudStorage.Services;
 using Microsoft.AspNetCore.CookiePolicy;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -44,6 +45,7 @@ void RegisterServices(IServiceCollection services, IConfiguration configuration)
     });
 
     services.AddPersistence(configuration);
+    services.AddServices(configuration);
 }
 
 void Configure(WebApplication app)
