@@ -11,6 +11,7 @@ namespace CloudStorage.Persistence.Interfaces
     {
         Task Create(User user, CancellationToken cancellationToken);
         Task<User> GetUserByActivationLink(string activationLink, CancellationToken cancellationToken);
+        Task<User> GetUserByEmail(string email, CancellationToken cancellationToken);
         Task Update(User user, CancellationToken cancellationToken);
     }
 }

@@ -10,5 +10,7 @@ namespace CloudStorage.Persistence.Interfaces
     public interface ITokenRepository
     {
         Task Save(Token token, CancellationToken cancellationToken);
+        Task<Token> GetTokenByUserId(Guid userId, CancellationToken cancellationToken);
+        Task Update(Token token, CancellationToken cancellationToken);
     }
 }

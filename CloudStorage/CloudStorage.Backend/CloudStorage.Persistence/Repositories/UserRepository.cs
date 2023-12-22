@@ -28,6 +28,13 @@ namespace CloudStorage.Persistence.Repositories
             return user;
         }
 
+        public async Task<User> GetUserByEmail(string email, CancellationToken cancellationToken)
+        {
+            User user = await _dbContext.Users.FirstOrDefaultAsync(user => user.Email == email, cancellationToken);
+
+            return user;
+        }
+
         public async Task Update(User user, CancellationToken cancellationToken)
         {
             _dbContext.Users.Update(user);

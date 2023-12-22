@@ -15,6 +15,7 @@ namespace CloudStorage.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
             base.OnModelCreating(modelBuilder);
         }
     }

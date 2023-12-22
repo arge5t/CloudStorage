@@ -15,6 +15,7 @@ namespace CloudStorage.Services
         {
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IMailService, MailService>();
+            services.AddScoped<ITokenService, TokenService>();
 
             services.Configure<MailClient>(options => configuration.GetSection("MailClient").Bind(options));
 
