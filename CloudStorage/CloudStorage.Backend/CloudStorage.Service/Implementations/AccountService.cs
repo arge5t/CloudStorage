@@ -124,7 +124,7 @@ namespace CloudStorage.Services.Implementations
         public async Task<BaseResponse<bool>> ActivateEmail(string activationLink)
         {
             try
-                {
+            {
                 var user = await _userRepostory.GetUserByActivationLink(activationLink, _cancellationToken);
 
                 if (user == null || user.isActivated)
@@ -191,6 +191,27 @@ namespace CloudStorage.Services.Implementations
                 return new BaseResponse<UserDto>()
                 {
                     Message = $"Token refresh error: {ex.Message}",
+                };
+            }
+        }
+
+        public async Task<BaseResponse<bool>> Logout(Guid refreshToken, Guid userId)
+        {
+            try
+            {
+                await _tokenService.Remove(userId);
+
+                return new BaseResponse<bool>()
+                {
+                    StatusCode = StatusCode.Ok,
+                    Data = true
+                };
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<bool>()
+                {
+                    Message = $"Logout error: {ex.Message}"
                 };
             }
         }

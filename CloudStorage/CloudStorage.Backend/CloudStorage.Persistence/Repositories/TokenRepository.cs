@@ -10,6 +10,12 @@ namespace CloudStorage.Persistence.Repositories
 
         public TokenRepository(IApplicationDbContext dbContext) => _dbContext = dbContext;
 
+        public async Task Delete(Token token, CancellationToken cancellationToken)
+        {
+            _dbContext.Tokens.Remove(token);
+            await _dbContext.SaveChangesAsync(cancellationToken);
+        }
+
         public async Task<Token> GetTokenByUserId(Guid userId, CancellationToken cancellationToken)
         {
             var token = await _dbContext.Tokens.FirstOrDefaultAsync(token => token.UserId == userId, cancellationToken);

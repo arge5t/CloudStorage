@@ -1,8 +1,11 @@
 ﻿using Azure;
 using CloudStorage.Domain.ViewModels;
 using CloudStorage.Services.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace CloudStorage.WebApi.Controllers
 {
@@ -60,7 +63,7 @@ namespace CloudStorage.WebApi.Controllers
 
             if (response.StatusCode == Domain.Enums.StatusCode.Ok && response.Data)
             {
-                return Redirect("https://localhost:7081/swagger/index.html");
+                return Ok(link);
             }
             return BadRequest(response.Message);
         }
@@ -68,8 +71,10 @@ namespace CloudStorage.WebApi.Controllers
         [HttpGet("refresh")]
         public async Task<IActionResult> Refresh()
         {
-            if (!(Request.Cookies.TryGetValue("X-Username", out var userName) && Request.Cookies.TryGetValue("X-Refresh-Token", out var refreshToken)))
-                return BadRequest();
+            string userName = GetCookie("X-Username");
+            string refreshToken = GetCookie("X-Refresh-Token");
+
+            if (string.IsNullOrEmpty(userName) && string.IsNullOrEmpty(refreshToken)) return BadRequest();
 
             var dto = await _accountService.Refresh(userName, new Guid(refreshToken));
 
@@ -84,12 +89,52 @@ namespace CloudStorage.WebApi.Controllers
             return BadRequest(dto.Message);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            string refreshToken = GetCookie("X-Refresh-Token");
+
+            if (string.IsNullOrEmpty(refreshToken)) return BadRequest();
+
+            var response = await _accountService.Logout(new Guid(refreshToken), UserId);
+
+            bool isLogout = response.Data;
+
+            if (isLogout)
+            {
+                DeleteCookies();
+                return Ok(isLogout);
+            }
+
+            return BadRequest();
+        }
+
+        private string GetCookie(string key)
+        {
+            var cookieValue = HttpContext.Request.Cookies[key];
+
+            if (!string.IsNullOrWhiteSpace(cookieValue))
+            {
+                return cookieValue;
+            }
+
+            return string.Empty;
+        }
 
         private void SaveTokenToCookies(string token, string userEmail, string refresh)
         {
             Response.Cookies.Append("X-Access-Token", token, new CookieOptions());
             Response.Cookies.Append("X-Username", userEmail, new CookieOptions());
             Response.Cookies.Append("X-Refresh-Token", refresh, new CookieOptions());
+        }
+
+        private void DeleteCookies()
+        {
+            foreach (var cookie in HttpContext.Request.Cookies)
+            {
+                Response.Cookies.Delete(cookie.Key);
+            }
         }
     }
 }

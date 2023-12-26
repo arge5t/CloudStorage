@@ -2,6 +2,7 @@
 using CloudStorage.Domain.Entities;
 using CloudStorage.Persistence.Interfaces;
 using CloudStorage.Services.Interfaces;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -23,19 +24,27 @@ namespace CloudStorage.Services.Implementations
 
         public async Task<Guid> Create(Guid userId, string jwt)
         {
-            var token = new Token()
-            {
-                Id = Guid.NewGuid(),
-                Refresh = Guid.NewGuid(),
-                Access = jwt,
-                UserId = userId,
-            };
-
             try
             {
+                var entity = await _tokenRepository.GetTokenByUserId(userId, _cancellationToken);
+
+                if (entity != null)
+                {
+                    await _tokenRepository.Delete(entity, _cancellationToken);
+                }
+
+                var token = new Token()
+                {
+                    Id = Guid.NewGuid(),
+                    Refresh = Guid.NewGuid(),
+                    Access = jwt,
+                    UserId = userId,
+                };
+
                 await _tokenRepository.Save(token, _cancellationToken);
 
                 return token.Refresh;
+
             }
             catch (Exception ex)
             {
@@ -64,6 +73,25 @@ namespace CloudStorage.Services.Implementations
             catch (Exception ex)
             {
                 throw new Exception($"Edit token error: {ex.Message}");
+            }
+        }
+
+        public async Task Remove(Guid userId)
+        {
+            try
+            {
+                var token = await _tokenRepository.GetTokenByUserId(userId, _cancellationToken);
+
+                if (token == null)
+                {
+                    throw new Exception("Token not found");
+                }
+
+                await _tokenRepository.Delete(token, _cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Remove token error: {ex.Message}");
             }
         }
 

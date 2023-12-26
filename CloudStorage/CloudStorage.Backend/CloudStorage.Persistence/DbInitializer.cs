@@ -4,7 +4,7 @@
     {
         public static void Initialize(ApplicationDbContext fileContext)
         {
-            //fileContext.Database.EnsureDeleted();
+            fileContext.Database.EnsureDeleted();
             fileContext.Database.EnsureCreated();
         }
     }

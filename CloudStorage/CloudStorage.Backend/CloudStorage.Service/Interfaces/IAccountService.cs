@@ -10,5 +10,6 @@ namespace CloudStorage.Services.Interfaces
         Task<BaseResponse<UserDto>> Login(LoginVm loginVm);
         Task<BaseResponse<bool>> ActivateEmail(string activationLink);
         Task<BaseResponse<UserDto>> Refresh(string userEmail, Guid refreshToken);
+        Task<BaseResponse<bool>> Logout(Guid refreshToken, Guid userId);
     }
 }

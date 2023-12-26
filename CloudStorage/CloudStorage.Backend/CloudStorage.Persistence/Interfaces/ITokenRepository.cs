@@ -12,5 +12,6 @@ namespace CloudStorage.Persistence.Interfaces
         Task Save(Token token, CancellationToken cancellationToken);
         Task<Token> GetTokenByUserId(Guid userId, CancellationToken cancellationToken);
         Task Update(Token token, CancellationToken cancellationToken);
+        Task Delete(Token token, CancellationToken cancellationToken);
     }
 }
