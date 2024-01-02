@@ -20,6 +20,7 @@ namespace CloudStorage.Persistence
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ITokenRepository, TokenRepository>();
+            services.AddScoped<IFileRepository, FileRepository>();
 
             return services;
         }

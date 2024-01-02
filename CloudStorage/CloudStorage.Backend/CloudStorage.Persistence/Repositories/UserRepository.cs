@@ -35,6 +35,13 @@ namespace CloudStorage.Persistence.Repositories
             return user;
         }
 
+        public async Task<User> GetUserById(Guid id, CancellationToken cancellationToken)
+        {
+            var user = await _dbContext.Users.FirstOrDefaultAsync(user => user.Id == id, cancellationToken);
+
+            return user;
+        }
+
         public async Task Update(User user, CancellationToken cancellationToken)
         {
             _dbContext.Users.Update(user);

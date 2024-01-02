@@ -99,7 +99,7 @@ void RegisterServices(IServiceCollection services, IConfiguration configuration)
     });
 }
 
-    void Configure(WebApplication app)
+void Configure(WebApplication app)
 {
     if (app.Environment.IsDevelopment())
     {

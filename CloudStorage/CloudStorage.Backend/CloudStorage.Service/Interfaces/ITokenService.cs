@@ -12,7 +12,7 @@ namespace CloudStorage.Services.Interfaces
     {
         public string GenerateToken(string id, string name, string email);
         Task<Guid> Create(Guid userId, string jwt);
-        Task<Guid> Edit(Guid userId, string jwt);
-        Task Remove(Guid userId);
+        Task<Guid> Edit(Guid userId, Guid refreshTiken, string jwt);
+        Task Remove(Guid userId, Guid refreshToken);
     }
 }

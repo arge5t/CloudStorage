@@ -16,9 +16,18 @@ namespace CloudStorage.Persistence.Repositories
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
 
+        public async Task<Token> GetToken(Guid userId, Guid refreshToken, CancellationToken cancellationToken)
+        {
+            var token = await _dbContext.Tokens
+                .FirstOrDefaultAsync(token => token.UserId == userId  && token.Refresh == refreshToken, cancellationToken);
+
+            return token;
+        }
+
         public async Task<Token> GetTokenByUserId(Guid userId, CancellationToken cancellationToken)
         {
-            var token = await _dbContext.Tokens.FirstOrDefaultAsync(token => token.UserId == userId, cancellationToken);
+            var token = await _dbContext.Tokens
+                .FirstOrDefaultAsync(token => token.UserId == userId, cancellationToken);
 
             return token;
         }

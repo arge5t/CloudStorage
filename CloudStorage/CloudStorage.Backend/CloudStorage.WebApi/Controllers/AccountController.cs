@@ -1,11 +1,8 @@
-﻿using Azure;
-using CloudStorage.Domain.ViewModels;
+﻿using CloudStorage.Domain.ViewModels;
 using CloudStorage.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
 
 namespace CloudStorage.WebApi.Controllers
 {
@@ -107,7 +104,7 @@ namespace CloudStorage.WebApi.Controllers
                 return Ok(isLogout);
             }
 
-            return BadRequest();
+            return BadRequest(response.Message);
         }
 
         private string GetCookie(string key)

@@ -14,8 +14,8 @@ namespace CloudStorage.Domain.Entities
         public string Password { get; set; }
         public bool isActivated { get; set; }
         public string ActivationLink { get; set; }
-        public int DiskSpace { get; set; }
-        public int UsedSpace { get; set; }
+        public long DiskSpace { get; set; }
+        public long UsedSpace { get; set; }
         public string? Avatar { get; set; }
     }
 }

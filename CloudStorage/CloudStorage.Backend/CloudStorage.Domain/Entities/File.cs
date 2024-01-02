@@ -11,8 +11,7 @@ namespace CloudStorage.Domain.Entities
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
-        public string? AccessLink { get; set; }
-        public int Size { get; set; }
+        public long Size { get; set; } = 0;
         public string Path { get; set; }
         public DateTime CreateTime { get; set; }
         public DateTime? EditTime { get; set; }

@@ -52,11 +52,11 @@ namespace CloudStorage.Services.Implementations
             }
         }
 
-        public async Task<Guid> Edit(Guid userId, string jwt)
+        public async Task<Guid> Edit(Guid userId, Guid refreshToken, string jwt)
         {
             try
             {
-                var token = await _tokenRepository.GetTokenByUserId(userId, _cancellationToken);
+                var token = await _tokenRepository.GetToken(userId, refreshToken, _cancellationToken);
 
                 if (token == null)
                 {
@@ -76,11 +76,11 @@ namespace CloudStorage.Services.Implementations
             }
         }
 
-        public async Task Remove(Guid userId)
+        public async Task Remove(Guid userId, Guid refreshToken)
         {
             try
             {
-                var token = await _tokenRepository.GetTokenByUserId(userId, _cancellationToken);
+                var token = await _tokenRepository.GetToken(userId, refreshToken, _cancellationToken);
 
                 if (token == null)
                 {

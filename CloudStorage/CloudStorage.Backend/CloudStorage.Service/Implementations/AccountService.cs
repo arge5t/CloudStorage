@@ -16,7 +16,7 @@ namespace CloudStorage.Services.Implementations
 
         private readonly CancellationToken _cancellationToken = new CancellationToken();
 
-        private int _diskSpace = GigToBytes(8);
+        private long _diskSpace = GigToBytes(8);
 
         public AccountService(
             IUserRepository userRepository,
@@ -172,7 +172,7 @@ namespace CloudStorage.Services.Implementations
 
                 string jwt = _tokenService.GenerateToken(user.Id.ToString(), user.Name, user.Email);
 
-                var tokenId = await _tokenService.Edit(user.Id, jwt);
+                var tokenId = await _tokenService.Edit(user.Id, refreshToken, jwt);
 
                 return new BaseResponse<UserDto>()
                 {
@@ -199,7 +199,7 @@ namespace CloudStorage.Services.Implementations
         {
             try
             {
-                await _tokenService.Remove(userId);
+                await _tokenService.Remove(userId, refreshToken);
 
                 return new BaseResponse<bool>()
                 {
@@ -220,6 +220,6 @@ namespace CloudStorage.Services.Implementations
 
         private bool PasswordVeryfied(string password, string hash) => BCrypt.Net.BCrypt.Verify(password, hash);
 
-        private static int GigToBytes(int gigabytesNum) => gigabytesNum * 1024 * 1024;
+        private static long GigToBytes(long gigabytesNum) => gigabytesNum * 1024 * 1024 * 1024;
     }
 }
