@@ -39,15 +39,7 @@ void RegisterServices(IServiceCollection services, IConfiguration configuration)
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
 
-    services.AddCors(options =>
-    {
-        options.AddPolicy("AllowAll", policy =>
-        {
-            policy.AllowAnyHeader();
-            policy.AllowAnyMethod();
-            policy.AllowAnyOrigin();
-        });
-    });
+    services.AddCors();
 
     services.AddPersistence(configuration);
     services.AddServices(configuration);
@@ -58,16 +50,12 @@ void RegisterServices(IServiceCollection services, IConfiguration configuration)
     services.AddSingleton(jwt);
     services.AddTransient<TokenService>();
 
-    services.AddAuthentication(i =>
-    {
-        i.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        i.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        i.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-        i.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
-    })
+    services.AddAuthorization();
+
+    services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
-        options.TokenValidationParameters = new TokenValidationParameters
+        options.TokenValidationParameters = new()
         {
             ValidateIssuer = true,
             ValidateAudience = true,
@@ -78,24 +66,6 @@ void RegisterServices(IServiceCollection services, IConfiguration configuration)
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt.Key)),
             ClockSkew = jwt.ExpirationTime
         };
-        options.SaveToken = true;
-        options.Events = new JwtBearerEvents();
-        options.Events.OnMessageReceived = context =>
-        {
-
-            if (context.Request.Cookies.ContainsKey("X-Access-Token"))
-            {
-                context.Token = context.Request.Cookies["X-Access-Token"];
-            }
-
-            return Task.CompletedTask;
-        };
-    })
-    .AddCookie(options =>
-    {
-        options.Cookie.SameSite = SameSiteMode.Strict;
-        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-        options.Cookie.IsEssential = true;
     });
 }
 
@@ -119,11 +89,15 @@ void Configure(WebApplication app)
     });
 
 
-    app.UseCors("AllowAll");
-
-    app.UseAuthorization();
+    app.UseCors(x => x
+        .WithOrigins("http://localhost:3000")
+        .AllowCredentials()
+        .AllowAnyMethod()
+        .AllowAnyHeader());
 
     app.UseAuthentication();
+
+    app.UseAuthorization();
 
     app.MapControllers();
 }

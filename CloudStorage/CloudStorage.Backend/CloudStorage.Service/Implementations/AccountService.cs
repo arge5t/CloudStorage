@@ -107,6 +107,9 @@ namespace CloudStorage.Services.Implementations
                     {
                         Name = user.Name,
                         Email = user.Email,
+                        UsedSpace = user.UsedSpace,
+                        DiskSpace = user.DiskSpace,
+                        Avatar = user.Avatar,
                         AccessToken = jwt,
                         RefreshToken = refreshToken.ToString()
                     }
@@ -181,6 +184,9 @@ namespace CloudStorage.Services.Implementations
                     {
                         Name = user.Name,
                         Email = user.Email,
+                        UsedSpace = user.UsedSpace,
+                        DiskSpace = user.DiskSpace,
+                        Avatar = user.Avatar,
                         AccessToken = jwt,
                         RefreshToken = tokenId.ToString()
                     }

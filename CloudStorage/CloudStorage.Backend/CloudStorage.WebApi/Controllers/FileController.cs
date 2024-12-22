@@ -1,9 +1,12 @@
 ﻿using CloudStorage.Domain.ViewModels;
 using CloudStorage.Services.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CloudStorage.WebApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     public class FileController : BaseController
     {

@@ -1,6 +1,5 @@
 ﻿using CloudStorage.Domain.ViewModels;
 using CloudStorage.Services.Interfaces;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,6 +15,7 @@ namespace CloudStorage.WebApi.Controllers
             _accountService = accountService;
         }
 
+        [AllowAnonymous]
         [HttpPost("registration")]
         public async Task<ActionResult> Registration([FromBody] RegistrationVm vm)
         {
@@ -33,6 +33,7 @@ namespace CloudStorage.WebApi.Controllers
             return BadRequest(dto.Message);
         }
 
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult> Login([FromBody] LoginVm vm)
         {
@@ -47,12 +48,13 @@ namespace CloudStorage.WebApi.Controllers
             {
                 var data = dto.Data;
 
-                SaveTokenToCookies(data.AccessToken, data.Email, data.RefreshToken);
+                SaveTokenToCookies(data.Email, data.RefreshToken);
                 return Ok(dto.Data);
             }
             return BadRequest(dto.Message);
         }
 
+        [AllowAnonymous]
         [HttpGet("activate/{link}")]
         public async Task<ActionResult> Activate(string link)
         {
@@ -79,14 +81,14 @@ namespace CloudStorage.WebApi.Controllers
             {
                 var data = dto.Data;
 
-                SaveTokenToCookies(data.AccessToken, data.Email, data.RefreshToken);
+                SaveTokenToCookies(data.Email, data.RefreshToken);
                 return Ok(data);
             }
 
             return BadRequest(dto.Message);
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize]
         [HttpPost("logout")]
         public async Task<IActionResult> Logout()
         {
@@ -119,11 +121,12 @@ namespace CloudStorage.WebApi.Controllers
             return string.Empty;
         }
 
-        private void SaveTokenToCookies(string token, string userEmail, string refresh)
+        private void SaveTokenToCookies(string userEmail, string refresh)
         {
-            Response.Cookies.Append("X-Access-Token", token, new CookieOptions());
-            Response.Cookies.Append("X-Username", userEmail, new CookieOptions());
-            Response.Cookies.Append("X-Refresh-Token", refresh, new CookieOptions());
+            var expires = DateTimeOffset.Now.AddDays(5);
+
+            Response.Cookies.Append("X-Username", userEmail, new CookieOptions() { Expires = expires });
+            Response.Cookies.Append("X-Refresh-Token", refresh, new CookieOptions() { Expires = expires});
         }
 
         private void DeleteCookies()

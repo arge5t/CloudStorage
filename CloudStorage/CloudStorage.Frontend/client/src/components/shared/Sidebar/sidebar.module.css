@@ -1,0 +1,54 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+  color: white;
+  padding: 20px 60px 20px 15px;
+  row-gap: 5px;
+}
+
+.logo {
+  display: flex;
+  align-items: flex-end;
+  text-align: center;
+  gap: 5px;
+  font-size: 24px;
+  color: white;
+  margin-bottom: 30px;
+}
+
+.menu {
+  flex: 1 1 auto;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.bottom {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.link {
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+  font-size: 20px;
+  color: white;
+  white-space: nowrap;
+}
+
+.link span {
+  color: #8d8989;
+  transition: all 0.5s ease 0s;
+}
+
+.link:hover span{
+  color: white;
+}

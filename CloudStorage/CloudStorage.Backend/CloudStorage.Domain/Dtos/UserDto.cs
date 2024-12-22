@@ -10,6 +10,9 @@ namespace CloudStorage.Domain.Dtos
     {
         public string Name { get; set; }
         public string Email { get; set; }
+        public long UsedSpace { get; set; }
+        public long DiskSpace { get; set; }
+        public string? Avatar { get; set; }
         public string RefreshToken {get; set; }
         public string AccessToken { get; set; }
     }
